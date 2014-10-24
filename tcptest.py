@@ -53,7 +53,7 @@ def runtest(hostandport, host, port, iters):
             s.connect((ip, int(port)))
             conntime = (time.time() - start) * 1000
             connsuccess += 1
-            if connmin == 0 or conntime < dnsmin:
+            if connmin == 0 or conntime < connmin:
                 connmin = conntime
             if conntime > connmax:
                 connmax = conntime
