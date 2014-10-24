@@ -8,9 +8,20 @@ import time
 def main(argv=None):
     if argv is None:
         argv = sys.argv
-    (host, port) = string.split(sys.argv[1], ":")
+    hostandport = sys.argv[1]
+    (host, port) = string.split(hostandport, ":")
     iters = int(sys.argv[2])
+    
+    ip = socket.gethostbyname(host)
+    print "------------------- %s -------------------\n" % hostandport
+    print "Access by Hostname %s" % host
+    runtest(hostandport, host, port, iters)
 
+    print "\nAccess by Ip %s" % ip
+    runtest(hostandport, ip, port, iters)
+    print "--------------------------------------------------------------------------------\n\n"
+
+def runtest(hostandport, host, port, iters):
     dnssuccess = 0
     dnstotal = 0
     dnsmin = 0
@@ -23,19 +34,19 @@ def main(argv=None):
 
     for i in range(iters):
         start = time.time()
+        ip = socket.gethostbyname(host)
+        dnstime = (time.time() - start) * 1000
+        dnssuccess += 1
+        if dnsmin == 0 or dnstime < dnsmin:
+            dnsmin = dnstime
+        if dnstime > dnsmax:
+            dnsmax = dnstime
+        dnstotal += dnstime
+        
+        start = time.time()
+        s = socket.socket()
         try:
-            ip = socket.gethostbyname(host)
-            dnstime = (time.time() - start) * 1000
-            dnssuccess += 1
-            if dnsmin == 0 or dnstime < dnsmin:
-                dnsmin = dnstime
-            if dnstime > dnsmax:
-                dnsmax = dnstime
-            dnstotal += dnstime
-            
-            start = time.time()
-            s = socket.socket()
-            s.settimeout(30)
+            s.settimeout(10)
             s.connect((ip, int(port)))
             conntime = (time.time() - start) * 1000
             connsuccess += 1
@@ -46,11 +57,14 @@ def main(argv=None):
             conntotal += conntime
         except:
             pass
-        sys.stdout.write('.')
-        sys.stdout.flush()
+        finally:
+            s.close()
+        sys.stderr.write('.')
+        sys.stderr.flush()
+    sys.stderr.write('\n')
+    sys.stderr.flush()
 
     print """
-------------------- %s -------------------
 DNS Success:     %d / %d
 DNS Min:         %d ms
 DNS Max:         %d ms
@@ -60,9 +74,7 @@ Connect Success: %d / %d
 Connect Min:     %d ms
 Connect Max:     %d ms
 Connect Avg:     %d ms
---------------------------------------------------------------------------------
-""" % (sys.argv[1], \
-       dnssuccess, iters, dnsmin, dnsmax, dnstotal / dnssuccess, \
+""" % (dnssuccess, iters, dnsmin, dnsmax, dnstotal / dnssuccess, \
        connsuccess, iters, connmin, connmax, conntotal / connsuccess)
 
 if __name__ == "__main__":
