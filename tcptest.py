@@ -22,6 +22,9 @@ def main(argv=None):
     print "--------------------------------------------------------------------------------\n\n"
 
 def runtest(hostandport, host, port, iters):
+    sys.stderr.write("Testing %s:%s " % (host, port))
+    sys.stderr.flush()
+
     dnssuccess = 0
     dnstotal = 0
     dnsmin = 0

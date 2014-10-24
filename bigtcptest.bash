@@ -1,10 +1,9 @@
 #!/bin/bash
 
 ./tcptest.py weibo.com:80 100 
-./tcptest.py weibo.com:443 100 
 
-./tcptest.py weibo.com:80 100 
-./tcptest.py weibo.com:443 100 
+./tcptest.py weibo.cn:80 100 
+./tcptest.py weibo.cn:443 100 
 
 ./tcptest.py cloudflare.com:80 100 
 ./tcptest.py cloudflare.com:443 100 
@@ -15,20 +14,24 @@
 ./tcptest.py minecraftforum.com:80 100 
 ./tcptest.py minecraftforum.com:443 100 
 
-./tcptest.py amazon.com:80 100 
-./tcptest.py amazon.com:443 100 
-
 ./tcptest.py amazon.cn:80 100 
 ./tcptest.py amazon.cn:443 100 
 
-./tcptest.py microsoft.com:80 100 
-./tcptest.py microsoft.com:443 100 
+./tcptest.py amazon.co.jp:80 100 
+./tcptest.py amazon.co.jp:443 100 
+
+./tcptest.py amazon.com:80 100 
+./tcptest.py amazon.com:443 100 
+
+./tcptest.py rakuten.co.jp:80 100 
+./tcptest.py rakuten.co.jp:443 100 
 
 ./tcptest.py microsoft.cn:80 100 
-./tcptest.py microsoft.cn:443 100 
 
-./tcptest.py weibo.com:80 100 
-./tcptest.py weibo.com:443 100 
+./tcptest.py microsoft.co.jp:80 100 
+
+./tcptest.py microsoft.com:80 100 
+./tcptest.py microsoft.com:443 100 
 
 ./tcptest.py propertyguru.com.sg:80 100 
 ./tcptest.py propertyguru.com.sg:443 100 
